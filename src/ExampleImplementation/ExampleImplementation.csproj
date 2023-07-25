@@ -7,7 +7,7 @@
     <ProjectGuid>{C7C95D3A-4654-46F9-98DB-A15150537F03}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>zExampleImplementation</RootNamespace>
+    <RootNamespace>ExampleImplementation</RootNamespace>
     <AssemblyName>ExampleImplementation</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
