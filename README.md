@@ -17,7 +17,12 @@ The example apps also contains example setup for an Design Automation [activity]
 
 ### Setup your DB app to work with Dynamo
 
-To run Dynamo graphs on your Revit model in Design Automation you need to reference *RDADHelper.dll* in your DB app. RDADHelper stands for *Revit Design Automation Dynamo Helper* and works as a intermediate layer between your DB app and Dynamo.
+To run Dynamo graphs on your Revit model in Design Automation you need to reference *RDADHelper.dll* in your DB app. RDADHelper stands for *Revit Design Automation Dynamo Helper* and works as a intermediate layer between your DB app and Dynamo. RDADHelper works similarly to Autodesk DesignAutomationBridge. 
+
+The steps are as follows:
+1. Subscribe to the `RDADHelper.Actions.OnGraphResultReady` event with your own event handler.
+2. Prepare to run your Dynamo graph by making a new `RunGraphArgs` object.
+3. 
 
 ### Dynamo nodes which do not work in the cloud
 
