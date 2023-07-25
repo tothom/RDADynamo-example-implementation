@@ -22,9 +22,9 @@ namespace ExampleImplementation
         public ExternalDBApplicationResult OnStartup(ControlledApplication application)
         {
             Console.WriteLine("<<!>> Example implementation started.");
+
             DesignAutomationBridge.DesignAutomationReadyEvent += HandleDesignAutomationReadyEvent;
             Actions.OnGraphResultReady += ProcessResult;
-
 
             return ExternalDBApplicationResult.Succeeded;
         }
@@ -35,9 +35,9 @@ namespace ExampleImplementation
             Console.WriteLine("<<!>> Got called by DA event.");
 
             //optionally do some pre-execution setup
-            var fp = e.DesignAutomationData.FilePath;
-            var workDir = Path.GetDirectoryName(fp);
-            fileName = Path.GetFileNameWithoutExtension(fp);
+            var filePath = e.DesignAutomationData.FilePath;
+            var workDir = Path.GetDirectoryName(filePath);
+            fileName = Path.GetFileNameWithoutExtension(filePath);
             
             var inputData = File.ReadAllText(Path.Combine(workDir, "input.json"));
             var graphsToRun = JsonConvert.DeserializeObject<List<RunGraphArgs>>(inputData);
