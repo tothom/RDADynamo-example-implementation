@@ -44,6 +44,9 @@
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="RDADHelper">
+      <HintPath>..\packages\RDADHelper\RDADHelper.dll</HintPath>
+    </Reference>
     <Reference Include="RevitAPI, Version=24.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>..\packages\Revit_All_Main_Versions_API_x64.2024.0.0\lib\net48\RevitAPI.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
@@ -69,13 +72,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RDADHelper\RDADHelper.csproj">
-      <Project>{3ed6cebc-c2da-494d-a91f-2a6d40ba5ba4}</Project>
-      <Name>RDADHelper</Name>
-      <Private>False</Private>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
