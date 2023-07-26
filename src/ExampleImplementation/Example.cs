@@ -29,17 +29,18 @@ namespace ExampleImplementation
             return ExternalDBApplicationResult.Succeeded;
         }
 
-        private string fileName = "";
         public void HandleDesignAutomationReadyEvent(object sender, DesignAutomationReadyEventArgs e)
         {
-            Console.WriteLine("<<!>> Got called by DA event.");
+            Console.WriteLine("<<!>> RDADHelper implementation got called by DA event.");
 
-            //optionally do some pre-execution setup
-            var filePath = e.DesignAutomationData.FilePath;
-            var workDir = Path.GetDirectoryName(filePath);
-            fileName = Path.GetFileNameWithoutExtension(filePath);
-            
-            var inputData = File.ReadAllText(Path.Combine(workDir, "input.json"));
+            // optionally do some pre-execution setup
+            var rvtFilePath = e.DesignAutomationData.FilePath;
+            var workDir = Directory.GetCurrentDirectory();
+
+            // the input folder name must be the same as inside your APS Activity Definition / Work Item Definition
+            var inputFolder = Path.Combine(workDir, "input.zip");
+
+            var inputData = File.ReadAllText(Path.Combine(inputFolder, "input.json"));
             var graphsToRun = JsonConvert.DeserializeObject<List<RunGraphArgs>>(inputData);
             foreach (var graphArgs in graphsToRun)
             {
@@ -52,11 +53,14 @@ namespace ExampleImplementation
         private int n = 1;
         private void ProcessResult(GraphResultArgs args)
         {
-            //optionally do some post-execution cleanup and management
+            // optionally do some post-execution cleanup and management here
 
-            //make sure you save your graph data for review
+            // make sure you save your graph data for review and troubleshooting
             var graphData = JsonConvert.SerializeObject(args, Formatting.Indented);
-            File.WriteAllText($"{args.WorkItemResultFolder}/{fileName}_{args.GraphName}_{n++}.json", graphData);
+            var saveName = $"{n++}_{args.GraphName}.json";
+            var savePath = string.IsNullOrWhiteSpace(args.WorkItemResultFolder) ?
+                saveName : Path.Combine(args.WorkItemResultFolder, saveName);
+            File.WriteAllText(savePath, graphData);
         }
     }
 }

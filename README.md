@@ -2,8 +2,9 @@
 
 ## Installation
 1. Clone this git repository
-2. Download the nuget packages
-3. Get the latest version of the dll _RDADHelper.dll_ and copy it to the `./packages/RDADHelper` folder
+2. Restore the nuget packages
+3A. When available, get the latest version of the dll _RDADHelper.dll_ and copy it to the `./dist/` folder
+3B. Alternatively, use the existing file in the `./dist/` folder
 4. Now all the references should be ok
 5. The next step includes setting up an Autodesk Platform Service (APS) application, creating a AppBundle and a related activity. Please have a look below on directions on how to do this.
 

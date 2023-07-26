@@ -2,7 +2,7 @@
 <RevitAddIns>
 <AddIn Type="DBApplication">
 <Name>RDAD Test</Name>
-<Assembly>E:\Github\DynamoRevit\src\zExampleImplementation\bin\Debug\zExampleImplementation.dll</Assembly>
+<Assembly>E:\Github\RDADynamo-example-implementation\src\ExampleImplementation\bin\Debug\ExampleImplementation.dll</Assembly>
 <AddInId>79A6EB3A-D754-4C87-8CFE-DAA008FAFDBC</AddInId>
 <FullClassName>ExampleImplementation.Example</FullClassName>
 <VendorId>ADSK</VendorId>
