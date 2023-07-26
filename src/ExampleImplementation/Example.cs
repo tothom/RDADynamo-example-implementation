@@ -37,7 +37,7 @@ namespace ExampleImplementation
             var rvtFilePath = e.DesignAutomationData.FilePath;
             var workDir = Directory.GetCurrentDirectory();
 
-            // the input folder name must be the same as inside your APS Activity Definition / Work Item Definition
+            // the input folder name must be the same as inside your APS Activity Definition
             var inputFolder = Path.Combine(workDir, "input.zip");
 
             var inputData = File.ReadAllText(Path.Combine(inputFolder, "input.json"));
@@ -58,8 +58,8 @@ namespace ExampleImplementation
             // make sure you save your graph data for review and troubleshooting
             var graphData = JsonConvert.SerializeObject(args, Formatting.Indented);
             var saveName = $"{n++}_{args.GraphName}.json";
-            var savePath = string.IsNullOrWhiteSpace(args.WorkItemResultFolder) ?
-                saveName : Path.Combine(args.WorkItemResultFolder, saveName);
+            var savePath = string.IsNullOrWhiteSpace(args.ResultFolder) ?
+                saveName : Path.Combine(args.ResultFolder, saveName);
             File.WriteAllText(savePath, graphData);
         }
     }
