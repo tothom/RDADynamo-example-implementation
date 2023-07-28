@@ -95,12 +95,12 @@ The input.json in this case could look something like this:
         ],
         "NodeInput": [
             {
-                "Id": "a1b2c3d4-1234-5678-9abc-def012345678",
+                "Id": "0c302edfd35c494d823990676f5f4aa0",
                 "Name": "Value",
                 "Value": "42"
             },
             {
-                "Id": "a1b2c3d4-1234-5678-9abc-def012345678",
+                "Id": "a1b2c3d4123456789abcdef012345678",
                 "Name": "Value",
                 "Value": "Hello World"
             }
@@ -117,7 +117,7 @@ The input.json in this case could look something like this:
         ],
         "NodeInput": [
             {
-              "Id": "a1b2c3d4-1234-5678-9abc-def012345678",
+              "Id": "0c302edfd35c494d823990676f5f4aa0",
               "Name": "Value",
               "Value": "42"
             }
