@@ -68,4 +68,22 @@ The APS work item for this implementation looks similar to the below:
 The activity expects a signed download link to a Revit file (either uploaded to the OSS storage or from Bim360), that will be downloaded and opened in Revit by Design Automation. The second input is a signed download link to a zip that will include the dynamo graph(s) and all of the supporting files.
 
 The current implementation expects an `input.json` file that contains a list of RDADHelper `RunGraphArgs`. Each `RunGraphArgs` item in the list has the following properties:
-- 
+- GraphName: The name of the Dynamo graph to run inside the zip file.
+- InputFolder: the local name of the input zip as defined in your APS activity. You have to remember that RDADynamo does not have any knowledge of your implementation specifics and needs this property to find the dynamo graph.
+- ResultFolder: this is an optional input that is recommended. If you specify a result folder, RDADynamo will move your graph there before executing it. That way all files saved by the graph will be placed in that result folder and it can later be returned by APS as a single link to a zip, instead of multiple ones for each file. If you do not want to use this feature, you have to make sure that you handle the created files manually.
+- InputFileNames: if your graph has any file input nodes, Dynamo will look for the file relative to the folder of the graph. If you've specified a 'ResultFolder', you will need to list these files here, so that RDADynamo can also move them over to the result folder prior to executing the graph. That way you can simplify your input paths inside your graph.
+- Packages: list of folders where Dynamo should look for custom packages. An easy way to implement this is to put all of your custom packages in a single reference folder. Alternatively, you can provide each folder separately.
+- NodeInput: a list of `NodeValues` to modify the graph nodes with. Only valid input nodes can be modified. In Dynamo, input nodes have an "Is Input" attribute in the right-click menu. 'Number' node or 'String' node are examples of input nodes. 
+
+Based on that, your input.zip file would need to have a folder structure similar to this:
+
+###input.zip:
+- input.json
+- packages:
+ - package A folder
+ - package B folder
+- graphA.dyn
+- graphB.dyn
+- some_graph_input_file.csv
+- python-3.9.12-embed-amd64.zip (for when you need to run cPython scripts)
+
