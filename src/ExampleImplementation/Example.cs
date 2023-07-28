@@ -46,6 +46,9 @@ namespace ExampleImplementation
             {
                 Actions.RunDynamoGraph(graphArgs);
             }
+            
+            ModelPath path = ModelPathUtils.ConvertUserVisiblePathToModelPath("result.rvt");
+            e.DesignAutomationData.RevitDoc.SaveAs(path, new SaveAsOptions());
 
             e.Succeeded = true;
         }
