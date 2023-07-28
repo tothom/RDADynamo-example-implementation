@@ -1,58 +1,71 @@
-# RDADynamo-example-implementation
-
-## Installation
-1. Clone this git repository
-2. Restore the nuget packages
-3A. When available, get the latest version of the dll _RDADHelper.dll_ and copy it to the `./dist/` folder
-3B. Alternatively, use the existing file in the `./dist/` folder
-4. Now all the references should be ok
-5. The next step includes setting up an Autodesk Platform Service (APS) application, creating a AppBundle and a related activity. Please have a look below on directions on how to do this.
-
-## How to run Dynamo graphs in Autodesk Design Automation
-
 ### Prerequisites
 
-Do run Dynamo graphs in the cloud it is necessary to have a basic understanding on how Autodesk Design Automation works. Please check out the [documentation for Design Automation](https://aps.autodesk.com/en/docs/design-automation/v3/developers_guide/overview/) to get an overview. If you are new to this we recommend starting with the [step-by-step tutorials](https://aps.autodesk.com/en/docs/design-automation/v3/tutorials/revit/about_this_tutorial/).
-
-The example apps also contains example setup for an Design Automation [activity](https://aps.autodesk.com/en/docs/design-automation/v3/reference/http/activities-POST/) to give you a head start.
-
-### Setup your DB app to work with Dynamo
-
-To run Dynamo graphs on your Revit model in Design Automation you need to reference *RDADHelper.dll* in your DB app. RDADHelper stands for *Revit Design Automation Dynamo Helper* and works as a intermediate layer between your DB app and Dynamo. RDADHelper works similarly to Autodesk DesignAutomationBridge. 
-
-The steps are as follows:
-1. Subscribe to the `RDADHelper.Actions.OnGraphResultReady` event with your own event handler.
-2. Prepare to run your Dynamo graph by making a new `RunGraphArgs` object.
-3. 
-
-### Dynamo nodes which do not work in the cloud
-
-When running an app in the cloud there’s no possibility of user interaction. Therefore Dynamo nodes with user interface will work when running Dynamo in Design Automation.
-
-These nodes will definitely not work in the cloud:
-- Select Model Element By Category
-- Select Model Elements By Category
-
-After trying to run a graph, the `OnGraphResultReady` action will return an object of type `GraphResultArgs`. In that object there is a list called `MissingNodes`, which contains all of the nodes which could not be found. This list will also contain nodes which will not work when running in the cloud, but also nodes from custom packages which are missing. Use this list to troubleshoot your graph nodes.
+To run Dynamo graphs in the cloud, it is necessary to have a basic understanding on how Autodesk Design Automation works. Please check out the [documentation for Design Automation](https://aps.autodesk.com/en/docs/design-automation/v3/developers_guide/overview/) for get an overview. If you are new to this we recommend starting with the [step-by-step tutorials](https://aps.autodesk.com/en/docs/design-automation/v3/tutorials/revit/about_this_tutorial/).
 
 
+### Making your owl Revit Design Automation Dynamo Implementation
 
-Other nodes with user interface could fail as well.
+To run Dynamo graphs on your Revit model in Design Automation you need to reference *RDADHelper.dll* in your DB app. RDADHelper stands for *Revit Design Automation Dynamo Helper* and works as an intermediate layer between your DB app bundle and Dynamo. Refer to the files included in this implementation on the specifics.
 
-### Using custom packages
+The APS activity for this implementation looks similar to the below:
+```json
+{
+    "commandLine": [
+        "$(engine.path)\\\\revitcoreconsole.exe /i \"$(args[rvtFile].path)\" /al \"$(appbundles[D4DA].path)\""
+    ],
+    "parameters": {
+        "rvtFile": {
+            "zip": false,
+            "ondemand": false,
+            "verb": "get",
+            "description": "Input Revit model",
+            "required": true
+        },
+        "input": {
+            "zip": true,
+            "ondemand": false,
+            "verb": "get",
+            "description": "Input Dynamo graph(s) and supporting files",
+            "required": true,
+            "localName": "input.zip"
+        },
+        "result": {
+            "zip": true,
+            "ondemand": false,
+            "verb": "put",
+            "description": "graph result",
+            "required": true,
+            "localName": "result"
+        }
+    },
+    "engine": "Autodesk.Revit+2024",
+    "appbundles": [
+        "{{dasNickName}}.D4DA+default"
+    ],
+    "description": "Run dynamo in the cloud"
+}
+```
 
-Custom packages needs to be uploaded with your AppBundle to work. 
+The APS work item for this implementation looks similar to the below:
+```json
+{
+  "activityId": "{{dasNickName}}.D4DA_Activity+default",
+  "arguments": {
+    "rvtFile": {
+      "url": "{{ossDownloadURLForRvt}}"
+    },
+    "input": {
+      "url": "{{ossDownloadURLForInput}}"
+    },
+    "result": {
+      "verb": "put",
+      "url": "{{ossUploadURL}}"
+    }
+  }
+}
+```
 
-Alternatively you can also pass custom packages through the WorkItem.
+The activity expects a signed download link to a Revit file (either uploaded to the OSS storage or from Bim360), that will be downloaded and opened in Revit by Design Automation. The second input is a signed download link to a zip that will include the dynamo graph(s) and all of the supporting files.
 
-### How to set Dynamo node values from DB app
-
-1. To set a value of an input node, you need to get this information aobut the node:
-    
-    | Guid | The unique identifier of the node |
-    | --- | --- |
-    | Name | The name of the property that you would like to change (usually Value) |
-    | Value | The new value you want the node to have |
-	
-2. This information is located in the .dyn file of your Dynamo graph.
-3. Open the graph in a text editor like Notepad in Windows.
+The current implementation expects an `input.json` file that contains a list of RDADHelper `RunGraphArgs`. Each `RunGraphArgs` item in the list has the following properties:
+- 
