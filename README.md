@@ -3,7 +3,7 @@
 To run Dynamo graphs in the cloud, it is necessary to have a basic understanding on how Autodesk Design Automation works. Please check out the [documentation for Design Automation](https://aps.autodesk.com/en/docs/design-automation/v3/developers_guide/overview/) for get an overview. If you are new to this we recommend starting with the [step-by-step tutorials](https://aps.autodesk.com/en/docs/design-automation/v3/tutorials/revit/about_this_tutorial/).
 
 
-### Making your owl Revit Design Automation Dynamo Implementation
+### Making your own Revit Design Automation Dynamo Implementation
 
 To run Dynamo graphs on your Revit model in Design Automation you need to reference *RDADHelper.dll* in your DB app. RDADHelper stands for *Revit Design Automation Dynamo Helper* and works as an intermediate layer between your DB app bundle and Dynamo. Refer to the files included in this implementation on the specifics.
 
@@ -77,11 +77,11 @@ The current implementation expects an `input.json` file that contains a list of 
 
 Based on that, your input.zip file would need to have a folder structure similar to this:
 
-###input.zip:
+### input.zip:
 - input.json
 - packages:
- - package A folder
- - package B folder
+    - package A folder
+    - package B folder
 - graphA.dyn
 - graphB.dyn
 - some_graph_input_file.csv
