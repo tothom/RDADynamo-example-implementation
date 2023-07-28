@@ -95,12 +95,12 @@ The input.json in this case could look something like this:
         ],
         "NodeInput": [
             {
-                "Id": "a1b2c3d4-1234-5678-9abc-def012345678",
+                "Id": "0c302edfd35c494d823990676f5f4aa0",
                 "Name": "Value",
                 "Value": "42"
             },
             {
-                "Id": "a1b2c3d4-1234-5678-9abc-def012345678",
+                "Id": "a1b2c3d4123456789abcdef012345678",
                 "Name": "Value",
                 "Value": "Hello World"
             }
@@ -117,7 +117,7 @@ The input.json in this case could look something like this:
         ],
         "NodeInput": [
             {
-              "Id": "a1b2c3d4-1234-5678-9abc-def012345678",
+              "Id": "0c302edfd35c494d823990676f5f4aa0",
               "Name": "Value",
               "Value": "42"
             }
@@ -137,6 +137,46 @@ Based on that, your input.zip file would need to have a folder structure similar
 - graphB.dyn
 - some_graph_input_file.csv
 - python-3.9.12-embed-amd64.zip (for when you need to run cPython scripts)
+
+## Using Custom Packages
+
+**Custom packages**
+
+- Custom packages must be included in a folder inside your work item’s input.
+- Your graph’s `RunArguments` will need to add that folder to its list of `Packages`.
+
+**CPython script nodes**
+
+- If you need to use cPython, you can optionally provide a zipped distribution of cPython inside your work item’s input.
+- It must be version 3.9
+- It must be called “python-3.9.12-embed-amd64.zip”
+- It must include any custom python modules that your scripts need
+
+**IronPython**
+
+- If your graph has any iron python scripts or uses any custom nodes that need iron python to work, then will you need to add the `Dynamo.IronPythonX.X` package in one of your packages folder (see note about custom packages above)
+- The version of iron python will depend on the included packages’ dependency. Most packages need `Dynamo.IronPython2.7`. For example, Clockwork and Spring Nodes need `Dynamo.IronPython2.7` to function.
+
+## Setting Custom Node Values
+
+1. To set a value of an input node, you need to get this information about the node:
+    
+    
+    | Guid | The unique identifier of the node |
+    | --- | --- |
+    | Name | The name of the property that you would like to change (usually Value) |
+    | Value | The new value you want the node to have |
+2. This information is located in the .dyn file of your Dynamo graph.
+3. All input nodes are stored at the top of the *.dyn file in the “Inputs” list. We reccomend you use a json compattible notepad application like Notepad++ or VSCode for easy access. Open the *.dyn graph in the editor of your choice.
+4. Add the new values inside your `input.json` file as a list under the `NodeInput` property.
+
+## Graph Execution Feedback and Troubleshooting
+
+After running a graph, the `OnGraphResultReady` action will return an object of type `GraphResultArgs`. Use this object to troubleshoot your graphs. We recommend you serialize this object with Newtonsoft.Json, or similar, and write its content to an output file in your `ResultFolder`.
+
+- `MissingNodes` will include any zero touch nodes that could not be found.
+- `WarningNodes` will include any *.dyf nodes that could not be found or any node that produced a warning or an error during the graph’s execution.
+- `OutputNodes` will include the value of any Watch Node that was marked as Output, similar to Dynamo Player. Using output watch nodes in key places inside your graph is another way in which you could troubleshoot its execution.
 
 ## Current Limitations
 Please refer to the [list of limitations](https://github.com/tothom/RDADynamo-example-implementation/blob/main/docs/UnsupportedNodes.md) for more info and suggested workaround.
