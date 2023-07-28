@@ -178,6 +178,10 @@ After running a graph, the `OnGraphResultReady` action will return an object of 
 - `WarningNodes` will include any *.dyf nodes that could not be found or any node that produced a warning or an error during the graph’s execution.
 - `OutputNodes` will include the value of any Watch Node that was marked as Output, similar to Dynamo Player. Using output watch nodes in key places inside your graph is another way in which you could troubleshoot its execution.
 
+## Sample Inputs
+- ### [Set Parameters](https://github.com/tothom/RDADynamo-example-implementation/tree/main/samples/set-parameter)
+- ### [Get Data](https://github.com/tothom/RDADynamo-example-implementation/tree/main/samples/getting-data-from-revit)
+
 ## Current Limitations
 Please refer to the [list of limitations](https://github.com/tothom/RDADynamo-example-implementation/blob/main/docs/UnsupportedNodes.md) for more info and suggested workaround.
 
