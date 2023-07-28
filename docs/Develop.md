@@ -2,8 +2,8 @@
 
 1. Clone this **DynamoCore**
 https://github.com/dimven/Dynamo/tree/RC2.17.4_D4DA
-- internals visible to RDADynamo
-- external python install path
+    - internals visible to RDADynamo
+    - external python install path
 2. Use **Revit 2024.0**
 3. Clone this branch of **DynamoRevit**
 https://github.com/dimven-adsk/DynamoRevit/tree/D4DA
@@ -23,7 +23,7 @@ https://github.com/dimven-adsk/DynamoRevit/tree/D4DA
 9. Add your implementation to the RDADynamo.bundle
     - currently the app bundle scripts assume you’re using the example implementation bundle
     
-    >💡 This is a temporary measure. We expect that in the future the RDADynamo bundle will be included on the Revit design automation systems and you will only need a tiny implementation bundle that references RDADHelper.dll, similar to the example implementation
+>💡 This is a temporary measure. We expect that in the future the RDADynamo bundle will be included on the Revit design automation systems and you will only need a tiny implementation bundle that references RDADHelper.dll, similar to the example implementation
     
 10. Deploy to APS using an activity similar to the one in the example implementation repository.
 11. Create a work item with the required inputs.
