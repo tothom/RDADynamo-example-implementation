@@ -1,0 +1,1 @@
+﻿Dynamo graph which writes a combined mark parameter value to all doors in the model. The graph gets all doors, finds out which room they belong. The room number is combined with the door mark and written to a parameter in the door. The revit model is saved as a new file, which needs to be uploaded after the the Design Automation has completed.
