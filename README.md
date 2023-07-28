@@ -137,3 +137,9 @@ Based on that, your input.zip file would need to have a folder structure similar
 - graphB.dyn
 - some_graph_input_file.csv
 - python-3.9.12-embed-amd64.zip (for when you need to run cPython scripts)
+
+## Current Limitations
+Please refer to the [list of limitations](https://github.com/tothom/RDADynamo-example-implementation/blob/main/docs/UnsupportedNodes.md) for more info and suggested workaround.
+
+## Building RDA Dynamo
+Please refer to the [following steps](https://github.com/tothom/RDADynamo-example-implementation/blob/main/docs/Develop.md) to build and develop RDADynamo further.
