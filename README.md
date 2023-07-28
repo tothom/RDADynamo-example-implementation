@@ -170,7 +170,7 @@ Based on that, your input.zip file would need to have a folder structure similar
 3. All input nodes are stored at the top of the *.dyn file in the “Inputs” list. We reccomend you use a json compattible notepad application like Notepad++ or VSCode for easy access. Open the *.dyn graph in the editor of your choice.
 4. Add the new values inside your `input.json` file as a list under the `NodeInput` property.
 
-## Graph Execution Feedback and Troubleshooting
+## Graph Execution, Feedback and Troubleshooting
 
 After running a graph, the `OnGraphResultReady` action will return an object of type `GraphResultArgs`. Use this object to troubleshoot your graphs. We recommend you serialize this object with Newtonsoft.Json, or similar, and write its content to an output file in your `ResultFolder`.
 
