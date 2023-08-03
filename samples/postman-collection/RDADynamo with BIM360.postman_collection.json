@@ -1,0 +1,483 @@
+{
+	"info": {
+		"_postman_id": "74518593-f257-4875-9b50-21d35156c6fb",
+		"name": "RDADynamo with BIM360",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24718687"
+	},
+	"item": [
+		{
+			"name": "Get an Access Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var body = JSON.parse(responseBody);",
+							"pm.globals.set(\"apiToken\", body[\"access_token\"]);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "{{client_id}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{client_secret}}",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "code:all data:write data:read bucket:create bucket:delete",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/authentication/v1/authenticate",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"authentication",
+						"v1",
+						"authenticate"
+					]
+				},
+				"description": "[See Documentation](https://forge.autodesk.com/en/docs/oauth/v2/reference/http/authenticate-POST/)"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Revit Model Storage Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var body = JSON.parse(responseBody);\r",
+							"\r",
+							"pm.globals.set(\"bim360RevitStorageId\", body.data.relationships.storage.data.id);\r",
+							"pm.globals.set(\"bim360RevitFileName\", body.data.attributes.name)"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"var fileUrl = pm.collectionVariables.get(\"revitFileBim360Url\");\r",
+							"\r",
+							"var fileUrn = fileUrl.match(/urn:adsk\\.wipprod:dm\\.lineage:.{22}/);\r",
+							"var projectId = fileUrl.match(/[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}/);\r",
+							"var folderUrn = fileUrl.match(/urn:adsk\\.wipprod:fs\\.folder:.{25}/);\r",
+							"\r",
+							"pm.globals.set(\"bim360RevitFileUrn\", fileUrn);\r",
+							"pm.globals.set(\"bim360ProjectId\", projectId);\r",
+							"pm.globals.set(\"bim360FolderUrn\", folderUrn);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/data/v1/projects/b.{{bim360ProjectId}}/items/{{bim360RevitFileUrn}}/tip",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"data",
+						"v1",
+						"projects",
+						"b.{{bim360ProjectId}}",
+						"items",
+						"{{bim360RevitFileUrn}}",
+						"tip"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Input Storage Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var body = JSON.parse(responseBody);\r",
+							"\r",
+							"pm.globals.set(\"bim360InputStorageId\", body.data.relationships.storage.data.id);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var fileUrl = pm.collectionVariables.get(\"inputFileBim360Url\");\r",
+							"\r",
+							"var fileUrn = fileUrl.match(/urn:adsk\\.wipprod:dm\\.lineage:.{22}/);\r",
+							"\r",
+							"pm.globals.set(\"bim360InputFileUrn\", fileUrn);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/data/v1/projects/b.{{bim360ProjectId}}/items/{{bim360InputFileUrn}}/tip",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"data",
+						"v1",
+						"projects",
+						"b.{{bim360ProjectId}}",
+						"items",
+						"{{bim360InputFileUrn}}",
+						"tip"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Storage Location",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var body = JSON.parse(responseBody);\r",
+							"\r",
+							"var objectId = body.data.id;\r",
+							"pm.globals.set(\"objectId\", objectId)\r",
+							"\r",
+							"var objectKey = objectId.split(\"/\").pop();\r",
+							"pm.globals.set(\"objectKey\", objectKey);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/vnd.api+json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/vnd.api+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"jsonapi\": {\r\n        \"version\": \"1.0\"\r\n    },\r\n    \"data\": {\r\n        \"type\": \"objects\",\r\n        \"attributes\": {\r\n            \"name\": \"{{bim360RevitFileName}}\"\r\n        },\r\n        \"relationships\": {\r\n            \"target\": {\r\n                \"data\": {\r\n                    \"type\": \"folders\",\r\n                    \"id\": \"{{bim360FolderUrn}}\"\r\n                }\r\n            }\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/data/v1/projects/b.{{bim360ProjectId}}/storage",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"data",
+						"v1",
+						"projects",
+						"b.{{bim360ProjectId}}",
+						"storage"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generate Signed S3 URL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var body = JSON.parse(responseBody);\r",
+							"\r",
+							"pm.globals.set(\"signedUrl\", body.urls[0])\r",
+							"pm.globals.set(\"uploadKey\", body.uploadKey)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/oss/v2/buckets/wip.dm.prod/objects/{{objectKey}}/signeds3upload",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"oss",
+						"v2",
+						"buckets",
+						"wip.dm.prod",
+						"objects",
+						"{{objectKey}}",
+						"signeds3upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create WorkItem",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var body = JSON.parse(responseBody);",
+							"pm.globals.set(\"workitemId\", body[\"id\"]);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"activityId\": \"{{nickname}}.{{activity}}+test\",\r\n    \"arguments\": {\r\n        \"rvtFile\": {\r\n            \"url\": \"{{bim360RevitStorageId}}\",\r\n            \"headers\": {\r\n                \"Authorization\": \"Bearer {{apiToken}}\"\r\n            }\r\n        },\r\n        \"input\": {\r\n            \"url\": \"{{bim360InputStorageId}}\",\r\n            \"headers\": {\r\n                \"Authorization\": \"Bearer {{apiToken}}\"\r\n            }\r\n        },\r\n        \"resultRvt\": {\r\n            \"verb\": \"put\",\r\n            \"url\": \"{{signedUrl}}\"\r\n        }\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/da/us-east/v3/workitems",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"da",
+						"us-east",
+						"v3",
+						"workitems"
+					]
+				},
+				"description": "[See documentation](https://forge.autodesk.com/en/docs/design-automation/v3/reference/http/workitems-POST/)"
+			},
+			"response": []
+		},
+		{
+			"name": "Check Status of a  WorkItem",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{dasApiToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/da/us-east/v3/workitems/{{workitemId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"da",
+						"us-east",
+						"v3",
+						"workitems",
+						"{{workitemId}}"
+					]
+				},
+				"description": "[See documentation](https://forge.autodesk.com/en/docs/design-automation/v3/reference/http/workitems-id-GET/)"
+			},
+			"response": []
+		},
+		{
+			"name": "Complete Upload",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"uploadKey\": \"{{uploadKey}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/oss/v2/buckets/wip.dm.prod/objects/{{objectKey}}/signeds3upload",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"oss",
+						"v2",
+						"buckets",
+						"wip.dm.prod",
+						"objects",
+						"{{objectKey}}",
+						"signeds3upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create New version",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/vnd.api+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"jsonapi\": {\r\n        \"version\": \"1.0\"\r\n    },\r\n    \"data\": {\r\n        \"type\": \"versions\",\r\n        \"attributes\": {\r\n            \"name\": \"{{bim360RevitFileName}}\",\r\n            \"extension\": {\r\n                \"type\": \"versions:autodesk.bim360:File\",\r\n                \"version\": \"1.0\"\r\n            }\r\n        },\r\n        \"relationships\": {\r\n            \"item\": {\r\n                \"data\": {\r\n                    \"type\": \"items\",\r\n                    \"id\": \"{{bim360RevitFileUrn}}\"\r\n                }\r\n            },\r\n            \"storage\": {\r\n                \"data\": {\r\n                    \"type\": \"objects\",\r\n                    \"id\": \"{{objectId}}\"\r\n                }\r\n            }\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/data/v1//projects/b.{{bim360ProjectId}}/versions",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"data",
+						"v1",
+						"",
+						"projects",
+						"b.{{bim360ProjectId}}",
+						"versions"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{apiToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "revitFileBim360Url",
+			"value": "https://docs.b360.autodesk.com/projects/5ce30d0c-002d-42bb-8c00-661c0689ec41/folders/urn:adsk.wipprod:fs.folder:co.I_OxfDFsTFazBTR9Gz7mzQ/detail/viewer/items/urn:adsk.wipprod:dm.lineage:Adm3jdMgQje6C_njwsuPIw",
+			"type": "string"
+		},
+		{
+			"key": "inputFileBim360Url",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

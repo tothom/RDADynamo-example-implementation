@@ -1,0 +1,113 @@
+{
+	"id": "143616d5-5774-40d7-8c3c-ed22184af52e",
+	"values": [
+		{
+			"key": "baseUrl",
+			"value": "https://developer.api.autodesk.com",
+			"enabled": true
+		},
+		{
+			"key": "client_id",
+			"value": "",
+			"type": "secret",
+			"enabled": true
+		},
+		{
+			"key": "client_secret",
+			"value": "",
+			"type": "secret",
+			"enabled": true
+		},
+		{
+			"key": "apiToken",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "bim360ProjectId",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "bim360RevitFileUrn",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "bim360InputFileUrn",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "bim360InputStorageId",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "bim360RevitStorageId",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "bim360RevitFileName",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "bim360FolderUrn",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "objectId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "objectKey",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "nickname",
+			"value": "D4DA",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "activity",
+			"value": "D4DABim360Upload",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "workitemId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "signedUrl",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "uploadKey",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"name": "Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2023-08-03T15:52:31.908Z",
+	"_postman_exported_using": "Postman/10.16.4"
+}
