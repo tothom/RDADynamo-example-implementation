@@ -1,6 +1,6 @@
 ### Prerequisites
 
-To run Dynamo graphs in the cloud, it is necessary to have a basic understanding on how Autodesk Design Automation works. Please check out the [documentation for Design Automation](https://aps.autodesk.com/en/docs/design-automation/v3/developers_guide/overview/) for get an overview. If you are new to this we recommend starting with the [step-by-step tutorials](https://aps.autodesk.com/en/docs/design-automation/v3/tutorials/revit/about_this_tutorial/).
+To run Dynamo graphs in the cloud, it is necessary to have a basic understanding on how Autodesk Design Automation works. Please check out the [documentation for Design Automation](https://aps.autodesk.com/en/docs/design-automation/v3/developers_guide/overview/) for get an overview ([alternative guide](https://aps.autodesk.com/en/docs/design-automation/v3/tutorials/revit/)). If you are new to this we recommend starting with the [step-by-step tutorials](https://aps.autodesk.com/en/docs/design-automation/v3/tutorials/revit/about_this_tutorial/). Take a look here for a [quick-start guide](https://github.com/autodesk-platform-services/aps-tutorial-postman/tree/master/DA4Revit).
 
 
 ### Making your own Revit Design Automation Dynamo Implementation
