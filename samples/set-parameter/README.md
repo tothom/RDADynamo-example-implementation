@@ -21,3 +21,34 @@ The name of the combined mark parameter can be changed like this in the `input.j
   }
 ]
 ```
+## Get file storage id for use in Design Automation
+
+<aside>
+☝ The `ProjectId` must be prefixed with `b.` That is b with a dot afterwards ¯\_(ツ)_/¯
+
+Example:
+
+`5ce30d0c-002d-42bb-8c00-661c0689ec41`
+
+becomes
+
+`b.5ce30d0c-002d-42bb-8c00-661c0689ec41`
+
+</aside>
+
+1. Get item **URN**
+    1. The URN is just the `id` when querying the items in a folder
+    2. You can also get it directly from the URL in BIM360 Docs. For example, it’s the last part of the URL when viewing a model
+        
+        ```html
+        https://docs.b360.autodesk.com/projects/5ce30d0c-002d-42bb-8c00-661c0689ec41/folders/urn:adsk.wipprod:fs.folder:co.I_OxfDFsTFazBTR9Gz7mzQ/detail/viewer/items/***urn:adsk.wipprod:dm.lineage:Gxrge9LfQXS0LFrW2sq8_Q***
+        ```
+        
+        `urn:adsk.wipprod:dm.lineage:Gxrge9LfQXS0LFrW2sq8_Q`
+        
+2. Get the **Storage Id**
+    1. This Id is located in the response body of a query to
+        1. https://developer.api.autodesk.com/data/v1/projects/`projectID`/items/`itemUrn`/tip
+        2. *Tip* means the latest version
+    2. The Storage Id is located here in the response body:
+        1. `responseBody.data.relationships.storage.data.id`
