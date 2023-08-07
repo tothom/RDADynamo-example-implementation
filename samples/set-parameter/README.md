@@ -21,11 +21,10 @@ The name of the combined mark parameter can be changed like this in the `input.j
   }
 ]
 ```
-## Get file storage id for use in Design Automation
+## Get the Bim360/ACC file storage id for use in Design Automation
 
 <aside>
-☝ The `ProjectId` must be prefixed with `b.` That is b with a dot afterwards ¯\_(ツ)_/¯
-
+☝ The `ProjectId` must be prefixed with `b.` That is b with a dot afterwards
 Example:
 
 `5ce30d0c-002d-42bb-8c00-661c0689ec41`
