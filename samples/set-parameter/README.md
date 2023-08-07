@@ -40,9 +40,10 @@ becomes
     2. You can also get it directly from the URL in BIM360 Docs. For example, it’s the last part of the URL when viewing a model
         
         ```html
-        https://docs.b360.autodesk.com/projects/5ce30d0c-002d-42bb-8c00-661c0689ec41/folders/urn:adsk.wipprod:fs.folder:co.I_OxfDFsTFazBTR9Gz7mzQ/detail/viewer/items/***urn:adsk.wipprod:dm.lineage:Gxrge9LfQXS0LFrW2sq8_Q***
+        https://docs.b360.autodesk.com/projects/5ce30d0c-002d-42bb-8c00-661c0689ec41/folders/urn:adsk.wipprod:fs.folder:co.I_OxfDFsTFazBTR9Gz7mzQ/detail/viewer/items/urn:adsk.wipprod:dm.lineage:Gxrge9LfQXS0LFrW2sq8_Q
         ```
-        
+        which results in
+
         `urn:adsk.wipprod:dm.lineage:Gxrge9LfQXS0LFrW2sq8_Q`
         
 2. Get the **Storage Id**
